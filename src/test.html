@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+<input type="text" value="aa" id="input">
+<script>
+
+  var mod = {
+    value: document.getElementById('input').value
+  };
+
+  //define value
+  watcher(mod, 'value', function (prop, newval) {
+    document.getElementById('input').value = newval;
+  });
+
+
+
+  //这是递归调用，会不会多了产生溢出
+  function watcher(obj, prop) {
+
+    console.log("watcher apply");
+
+    var val = obj[prop];
+
+    var getter = function () {
+        return val;
+    };
+
+    var setter = function (newval) {
+        val = newval;
+        // $("#input").val(newval);
+        document.getElementById('input').value = newval;
+    };
+
+    defineGetAndSet(obj, prop, getter, setter);
+
+  };
+
+    function defineGetAndSet(obj, propName, getter, setter) {
+        console.log("define Get and Setter apply");
+
+        try {
+            Object.defineProperty(obj, propName, {
+                get: getter,
+                set: setter,
+                enumerable: true,
+                configurable: true
+            });
+        } catch(error) {
+
+            try{
+                Object.prototype.__defineGetter__.call(obj, propName, getter);
+                Object.prototype.__defineSetter__.call(obj, propName, setter);
+            }catch(error2){
+                console.log("browser not supported.");
+            }
+        }
+    }
+
+  // for(var i = 0; i < 100; i++){
+  //   mod.value = i;
+  // }
+
+  
+
+</script>
+</body>
+</html>

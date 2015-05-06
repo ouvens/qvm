@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>qmv</title>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="white"/>
+    <meta name="format-detection" content="telephone=no">
+</head>
+<body>
+
+	<div id="demo" q-text="text"></div>
+	
+	<script type="text/javascript" src="js/zepto.js"></script>
+	<script type="text/javascript" src="js/qvm.js"></script>
+	<script>
+
+	var vm = qvm.get({
+		selector: '#demo',
+		data:{
+			text: '<h2>Hello World!</h2>'
+		}
+	});
+
+	//使用mvvm
+	setTimeout(function(){
+		var start_time = +new Date,
+			end_time;
+
+		for(var i = 0; i< 10000; i ++){
+			vm.text.accessor = '<h2>Fuck world!</h2>';
+		}
+
+		end_time = +new Date;
+		console.log('qvm:', end_time - start_time);
+
+	},1000);
+
+	// 使用zepto
+	setTimeout(function(){
+		var start_time = +new Date,
+			end_time;
+		var $elem = $('#demo');
+
+		for(var i = 0; i< 10000; i ++){
+			$elem.html('<h2>Fuck world!</h2>');
+		}
+		end_time = +new Date;
+		console.log('zepto:', end_time - start_time);
+	},2000)
+
+	// 使用原生
+	setTimeout(function(){
+		var start_time = +new Date,
+			end_time;
+		var elem = document.getElementById('demo');
+
+		for(var i = 0; i< 10000; i ++){
+			elem.innerHTML= '<h2>Fuck world!</h2>';
+		}
+		end_time = +new Date;
+		console.log('native:', end_time - start_time);
+	},3000)
+
+    </script>
+</body>
+</html>

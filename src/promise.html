@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Promise 例子</title>
+</head>
+<body>
+	<div id="div">{{KK}}</div>
+
+	<script>
+
+		function Promise(selector) {
+			var elem = null;
+			var type = (/#.+/).test(selector)? 'id': (/\..+/).test(selector)? 'class' : 'element';
+			
+			switch(type){
+				case 'id':
+					elem = document.getElementById(selector.slice(1));
+					break;
+				case 'class':
+					elem = document.getElementById(selector.slice(1));
+					break;
+				case 'element':
+					element = document.getElementsByTagName(selector);
+					break;
+				default:
+					break;
+			}
+			this.$elem = elem;
+			
+		}
+
+		Promise.prototype.console = function() {
+			console.dir(this);
+			return this;
+		}
+
+		Promise.prototype.html = function(html) {
+			this.$elem.innerHTML = html;
+			return this;
+		}
+
+		var $ = function(selector){
+			var promise = new Promise(selector);
+			return promise;
+		}
+
+		var dom = $('#div');
+		dom.html('sdfsdf').html('MMMM');
+
+	</script>
+
+</body>
+</html>

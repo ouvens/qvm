@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>qmv</title>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="white"/>
+    <meta name="format-detection" content="telephone=no">
+</head>
+<body>
+	<style>
+	.red{
+		color: red;
+	}
+	.green{
+		color: green;
+	}
+	</style>
+	<h2>循环嵌套</h2>
+	<div id="demo" q-class="color" q-on="click | test1" q-repeat="list">
+			<img q-attr-src="img" q-on="click | test" width="50" height="30">
+			<span q-text="title" q-class="color"></span>
+	</div>
+
+	<h2>非循环嵌套</h2>
+	<div id="demo1" q-class="color">
+			<img q-attr-src="list.img" q-on="click | test1" width="50" height="30">
+			<span q-text="list.title" q-class="color"></span>
+	</div>
+	<script type="text/javascript" src="js/zepto.js"></script>
+	<script type="text/javascript" src="js/qvm.js"></script>
+	<script>
+	var list =[{
+				img: 'http://9.url.cn/edu/banner/img/10b0af94_760_300.jpg',
+				title: '音乐改变世界'
+			},{
+				img: 'http://9.url.cn/edu/banner/img/880facff_760_300.jpg',
+				title: 'PS 大神教程'
+			},{
+				img: 'http://9.url.cn/edu/banner/img/505d9c39_760_300.jpg',
+				title: '艺术人生'
+			}];
+	var vm = qvm.get({
+		selector: '#demo',
+		data:{
+			text: '<h2>Hello World!</h2>',
+			color: 'red',
+			list: list
+		},
+		method: {
+			test: function(){
+				alert(1)
+			},
+			test1: function(){
+				alert(2)
+			}
+
+		}
+	});
+
+	var vm1 = qvm.get({
+		selector: '#demo1',
+		data:{
+			text: '<h2>Hello World!</h2>',
+			color: 'red',
+			list: {
+				img: 'http://9.url.cn/edu/banner/img/880facff_760_300.jpg',
+				title: 'PS 大神教程'
+			}
+		},
+		method: {
+			test: function(){
+				alert(1)
+			},
+			test1: function(){
+				alert(2)
+			}
+
+		}
+	});
+	setTimeout(function(){
+		var start_time = +new Date,
+			end_time;
+		for(var i = 0; i< 10; i ++){
+			delete list[2];
+			list[0].title='music change the world';
+			list[1].title='PS master learning';
+			vm.class.accessor = 'green';
+			vm.repeat.accessor = list;
+		}
+		end_time = +new Date;
+		console.log(end_time - start_time);
+
+	},4000);
+
+	// setTimeout(function(){
+	// 	var start_time = +new Date,
+	// 		end_time;
+	// 	for(var i = 0; i< 10000; i ++){
+	// 		delete list[2];
+	// 		list[0].title='music change the world';
+	// 		list[1].title='PS master learning';
+	// 		vm.class.accessor = 'green';
+	// 		vm.repeat.accessor = list;
+	// 	}
+	// 	end_time = +new Date;
+	// 	console.log(end_time - start_time);
+	// },10000);
+
+    </script>
+</body>
+</html>

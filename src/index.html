@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>移动组件demo</title>
+</head>
+<body>
+	<div id="div" q-name="string" q-duplex="string">{{string.value}}
+		<span class="class1">
+			<span class="class2" q-duplex="string2">我是:{{string.name}}</span>
+			<span class="class3 {{string.class}}">MMMMMMMMMMMMMMM</span>
+			<span class="class4" q-duplex="string2">我是:{{string.obj.value1}}</span>
+		</span>
+	</div>
+
+
+	<div id="div2" q-name="string" q-duplex="string">{{string.value}}
+		<span class="class1">
+			<span class="class2" q-duplex="string2">我是:{{string.name}}</span>
+			<span class="class3 {{string.class}}">MMMMMMMMMMMMMMM</span>
+			<span class="class4" q-duplex="string2">我是:{{string.obj.value1}}</span>
+		</span>
+	</div>
+	<div id="input" q-duplex="input"  q-name="input">
+		<input type="text" value="{{input}}">{{input}}
+	</div>
+	<div id="div1" q-name="string1" q-duplex="string1">{{string1}}
+		<span class="class1">
+			<span class="class2" q-duplex="string2">我是:{{string1}}</span>
+			<span class="class3 {{string}}">MMMMMMMMMMMMMMM</span>
+			<span class="class4" q-duplex="string2">我是:{{string1}}</span>
+		</span>
+	</div>
+	<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>
