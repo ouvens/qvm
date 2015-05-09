@@ -1,19 +1,17 @@
 {
-  "name": "alloyteam-simple",
+  "name": "qvm",
   "version": "0.1.0",
-  "description": "Alloyteam Simple Web Apps - By Slush generator alloyteam-simple",
+  "description": "qvm, mimi mvvm lib can be used in mobile device,to be updated~",
   "keywords": [
     "front-end",
-    "alloyteam",
+    "qvm",
     "web",
-    "app"
+    "app",
+    "mvvm"
   ],
-  "homepage": "https://github.com/alloyteam",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/rehorn/slush-alloyteam-simple.git"
-  },
-  "author": "alloyteam",
+  "homepage": "https://github.com/ouvenzhang/qvm",
+  "repository": {},
+  "author": "ouvenzhang",
   "dependencies": {
     "async": "^0.9.0",
     "del": "^0.1.3",

@@ -514,7 +514,7 @@
 
 		//get方法选择遵循jQuery选择器规则
 		get: function(opts){
-			var doc = {selector: 'html'};
+			var doc = {selector: 'body'};
 
 			if(type(opts) !== 'object' || !opts.selector){
 				return this.get(doc);

@@ -226,7 +226,7 @@ gulp.task('cleanall', function(cb) {
 });
 
 // copy js、html到dist
-var things2copy = ['*.{html,ico}', 'libs/**/*.*', 'js/*.js', 'img/static/**/' + configs.imgType];
+var things2copy = ['*.{html,ico}', 'html/*.*', 'libs/**/*.*', 'js/*.js', 'img/static/**/' + configs.imgType];
 gulp.task('copy', function() {
     return gulp.src(things2copy, opt)
         .pipe(newer(dist))
@@ -246,16 +246,8 @@ gulp.task('img-rev', function() {
 // 编译scss并自动合成雪碧图
 var scss2compile = '**/*.scss';
 gulp.task('compass', function() {
-    var cssSrc = './src/scss/*.scss',
+    var cssSrc = './src/css/**/*.scss',
         cssDst = './dist/css';
-
-    // return gulp.src(cssSrc)
-    //     .pipe(sass({ style: 'expanded'}))
-    //     .pipe(gulp.dest(cssDst))
-    //     .pipe(rename({ suffix: '.min' }))
-    //     .pipe(minifycss())
-    //     .pipe(livereload(server))
-    //     .pipe(gulp.dest(cssDst));
 
     return gulp.src(scss2compile, opt)
         .pipe(newer(dist))
@@ -308,6 +300,7 @@ gulp.task('minifyCss', ['compass'], function() {
 // inline js to html, or base64 to img
 gulp.task('htmlrefs', function() {
     var mapping;
+
     var jsRev = configs.jsRev + 'rev-manifest.json';
     var cssRev = configs.cssRev + 'rev-manifest.json';
     if (fs.existsSync(jsRev) && fs.existsSync(cssRev)) {
@@ -322,14 +315,13 @@ gulp.task('htmlrefs', function() {
         scope: [dist],
         mapping: mapping
     };
-
-    return gulp.src(dist + '*.html')
+    return gulp.src(dist + '**/*.html')
         .pipe(htmlrefs(refOpt))
         .pipe(gulp.dest(dist));
 });
 
 gulp.task('minifyHtml', function() {
-    return gulp.src(src + '*.html')
+    return gulp.src(src + '/html/*.html')
         .pipe(minifyHtml({
             empty: true
         }))
