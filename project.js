@@ -7,7 +7,6 @@ module.exports = {
     webpack: {
         entry: {
             // index: './src/js/index.js',
-            component: './src/js/component.js',
             zepto: './src/js/lib/zepto.min.js',
             jquery: './src/js/lib/jquery.min.js'
         },

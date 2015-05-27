@@ -1,13 +1,13 @@
 {
-  "name": "qvm",
+  "name": "gulp-react-webpack",
   "version": "0.1.0",
-  "description": "qvm, mimi mvvm lib can be used in mobile device,to be updated~",
+  "description": "gulp-react-webpack dev enviroment~",
   "keywords": [
     "front-end",
-    "qvm",
+    "react",
     "web",
     "app",
-    "mvvm"
+    "webpack"
   ],
   "homepage": "https://github.com/ouvenzhang/qvm",
   "repository": {},
@@ -35,9 +35,14 @@
     "request": "^2.44.1",
     "run-sequence": "^1.0.2",
     "vinyl-paths": "^1.0.0",
-    "gulp-ruby-sass": "^1.0.1"
+    "react": "~0.12.0",
+    "gulp-react": "^3.0.1",
+    "jsx-loader": "^0.13.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "gulp-react": "^3.0.1",
+    "jsx-loader": "^0.13.2"
+  },
   "engines": {
     "node": ">=0.10.0",
     "npm": ">=1.2.10"
