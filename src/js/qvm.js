@@ -101,6 +101,18 @@
 		return qAttrs;
 	}
 
+	var isQElement = function(elem){
+		var attributes = elem.attributes,
+			nodeName;
+		for(var key in attributes){
+			nodeName = attributes[key].nodeName;
+			if(nodeName && nodeName.indexOf('q-') > -1){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	var getValue = function(elem, key){
 		var value = (elem.getAttribute('q-' + key) || '').toString();
 		elem.removeAttribute('q-' + key);
@@ -145,7 +157,7 @@
 
 		var directiveMethod = {
 			text:function(key,vm){
-				vm.$elem.innerHTML = htmlFilter(Data.parseData(vm.$model[key]['ns'], key, vm));
+				$(vm.$elem).html(htmlFilter(Data.parseData(vm.$model[key]['ns'], key, vm)));
 				return true;
 			},
 			class: function(key, vm){
@@ -165,12 +177,22 @@
 				return true;
 			},
 
+			show: function(key, vm){
+				var state = Data.parseData(vm.$model[key]['ns'], key, vm);
+				if(state){
+					$(vm.$elem).show();
+				}else{
+					$(vm.$elem).hide();
+				}
+				// return true;
+			},
+
 			repeat: function(key, vm){
 				var list = Data.parseData(vm.$model[key]['ns'], key, vm),
 					newNode, nodeTpl;
 
 				nodeTpl = vm.$model[key].tpl;
-				vm.$elem.innerHTML = '';
+				$(vm.$elem).html('');
 				//此处要移除事件绑定，待考虑
 
 				//如果为对象,则转换为含有该对象长度为1的数组,主要为了兼容性考虑
@@ -254,14 +276,6 @@
 								break;
 						}
 					});
-				}else if(type(ns) === 'string'){
-					// switch(key){
-					// 	case 'on':
-					// 		returnValue = ns;
-					// 	default:
-					// 		returnValue = returnValue[ns];
-					// 		break;
-					// }
 				}else{
 
 				}
@@ -276,7 +290,7 @@
 						arrayEach(nsArray, function(key, i){
 							if(type(data[key]) === 'object'){
 								data = data[key];
-							}else if(type(data[key]) === 'string' || type(data[key]) == 'array'){
+							}else{
 								data [key] = value;
 								return true
 							}	
@@ -286,7 +300,7 @@
 						arrayEach(nsArray, function(key, i){
 								if(type(data[key]) === 'object'){
 									data = data[key];
-								}else if(type(data[key]) === 'string' || type(data[key]) == 'array'){
+								}else{
 									//移除原有class
 									$(vm.$elem).removeClass(data[key]);
 									data[key] = value;
@@ -303,10 +317,10 @@
 						arrayEach(nsArray, function(key, i){
 							if(type(data[key]) === 'object'){
 								data = data[key];
-							}else if(type(data[key]) === 'string' || type(data[key]) == 'array'){
-								data [key] = value;
-								return true
-							}	
+							}else{
+								// 一直找到对应的值，然后赋给value
+								data[key] = value;
+							}
 						});
 						break;
 				}
@@ -479,13 +493,15 @@
 		// console.log(vm)
 		//扫描节点，需要改进
 		function scan(vm, elem, data){
-			var children = $(elem).find('*');
-			arrayEach(children, function(elemNode, i){
-
+			var children = elem.childNodes,
+				elemNode;	//elem.childNodes;//$(elem).find('*');
+			
+			for(var i=0; i < children.length; i++){
+				elemNode = children[i];
 				var subId;
 				//将外部opts的参数带入子元素中使用，但是元素节点使用子节点
 				//有Q属性时生成自动id并初始化一次
-				if(getQAttrs(elemNode).length > 0){
+				if(isQElement(elemNode)){
 					if(elemNode.id){
 						subId = elemNode.id;
 					}else{
@@ -501,9 +517,8 @@
 					qvm.get(subOpts);
 				}
 				// 扫描下一个子节点保证遍历所有的节点
-				scan(parent, elemNode.children[i], data);
-				
-			});
+				// scan(parent, elemNode.children[i], data);
+			}
 		}
 
 		//生成返回vm对象

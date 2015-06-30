@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>qmv</title>
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="white"/>
+    <meta name="format-detection" content="telephone=no">
+</head>
+<body>
+
+	<div id="demo" q-class="color"></div>
+	
+	<script type="text/javascript" src="js/zepto.js"></script>
+	<script type="text/javascript" src="js/qvm.js"></script>
+	<script>
+
+	var vm = qvm.get({
+		selector: '#demo',
+		data:{
+			color: 'red'
+		}
+	});
+
+	//使用mvvm
+	setTimeout(function(){
+		var start_time = +new Date,
+			end_time;
+
+		for(var i = 0; i< 10000; i ++){
+			vm.class.accessor = 'green';
+		}
+
+		end_time = +new Date;
+		console.log('qvm:', end_time - start_time);
+
+	},1000);
+
+	// 使用zepto
+	setTimeout(function(){
+		var start_time = +new Date,
+			end_time;
+		var $elem = $('#demo');
+
+		for(var i = 0; i< 10000; i ++){
+			$elem.removeClass('red').addClass('green');
+		}
+		end_time = +new Date;
+		console.log('zepto:', end_time - start_time);
+	},2000)
+
+	// 使用原生
+	setTimeout(function(){
+		var start_time = +new Date,
+			end_time;
+		var elem = document.getElementById('demo');
+		var oldClass;
+		for(var i = 0; i< 10000; i ++){
+			oldClass = elem.getAttribute('class');
+			oldClass = oldClass.replace('red','green');
+			elem.setAttribute('class', oldClass);
+		}
+		end_time = +new Date;
+		console.log('native:', end_time - start_time);
+	},3000)
+
+    </script>
+</body>
+</html>

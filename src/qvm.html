@@ -18,16 +18,21 @@
 	}
 	</style>
 	<h2>循环嵌套</h2>
-	<div id="demo" q-class="color" q-on="click | test1" q-repeat="list">
+	<div id="demo" q-class="color" q-on="click | test1" q-repeat="list" embed>
 			<img q-attr-src="img" q-on="click | test" width="50" height="30">
-			<span q-text="title" q-class="color"></span>
+			<span q-class="color">
+				<h2 q-text="title">title</h2>
+				<div q-text="title"></div>
+			</span>
 	</div>
 
 	<h2>非循环嵌套</h2>
+
 	<div id="demo1" q-class="color">
-			<img q-attr-src="list.img" q-on="click | test1" width="50" height="30">
-			<span q-text="list.title" q-class="color"></span>
+		<img q-attr-src="list.img" q-on="click | test1" width="50" height="30">
+		<span q-text="list.title" q-class="color"></span>
 	</div>
+
 	<script type="text/javascript" src="js/zepto.js"></script>
 	<script type="text/javascript" src="js/qvm.js"></script>
 	<script>
@@ -55,7 +60,6 @@
 			test1: function(){
 				alert(2)
 			}
-
 		}
 	});
 
