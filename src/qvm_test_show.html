@@ -10,7 +10,10 @@
 </head>
 <body>
 
-	<div id="demo" q-class="color"></div>
+	<div id="demo" q-class="color" q-set="show" q-show="show">
+		<span>LLLLLLL</span>
+		<div q-show="show">MMMMMMM</div>
+	</div>
 	
 	<script type="text/javascript" src="js/zepto.js"></script>
 	<script type="text/javascript" src="js/qvm.js"></script>
@@ -19,51 +22,53 @@
 	var vm = qvm.get({
 		selector: '#demo',
 		data:{
-			color: 'red'
+			color: 'red',
+			show: true
 		}
 	});
 
+	vm.$model.set.accessor = false;
 	//使用mvvm
-	setTimeout(function(){
-		var start_time = +new Date,
-			end_time;
+	// setTimeout(function(){
+	// 	var start_time = +new Date,
+	// 		end_time;
 
-		for(var i = 0; i< 10000; i ++){
-			vm.class.accessor = 'green';
-		}
+	// 	for(var i = 0; i< 10000; i ++){
+	// 		vm.$model.class.accessor = 'green';
+	// 	}
 
-		end_time = +new Date;
-		console.log('qvm:', end_time - start_time);
+	// 	end_time = +new Date;
+	// 	console.log('qvm:', end_time - start_time);
 
-	},1000);
+	// },1000);
 
-	// 使用zepto
-	setTimeout(function(){
-		var start_time = +new Date,
-			end_time;
-		var $elem = $('#demo');
+	// // 使用zepto
+	// setTimeout(function(){
+	// 	var start_time = +new Date,
+	// 		end_time;
+	// 	var $elem = $('#demo');
 
-		for(var i = 0; i< 10000; i ++){
-			$elem.removeClass('red').addClass('green');
-		}
-		end_time = +new Date;
-		console.log('zepto:', end_time - start_time);
-	},2000)
+	// 	for(var i = 0; i< 10000; i ++){
+	// 		$elem.removeClass('red').addClass('green');
+	// 	}
+	// 	end_time = +new Date;
+	// 	console.log('zepto:', end_time - start_time);
+	// },2000)
 
-	// 使用原生
-	setTimeout(function(){
-		var start_time = +new Date,
-			end_time;
-		var elem = document.getElementById('demo');
-		var oldClass;
-		for(var i = 0; i< 10000; i ++){
-			oldClass = elem.getAttribute('class');
-			oldClass = oldClass.replace('red','green');
-			elem.setAttribute('class', oldClass);
-		}
-		end_time = +new Date;
-		console.log('native:', end_time - start_time);
-	},3000)
+	// // 使用原生
+	// setTimeout(function(){
+	// 	var start_time = +new Date,
+	// 		end_time;
+	// 	var elem = document.getElementById('demo');
+	// 	var oldClass;
+	// 	for(var i = 0; i< 10000; i ++){
+	// 		oldClass = elem.getAttribute('class');
+	// 		oldClass = oldClass.replace('red','green');
+	// 		elem.setAttribute('class', oldClass);
+	// 	}
+	// 	end_time = +new Date;
+	// 	console.log('native:', end_time - start_time);
+	// },3000)
 
     </script>
 </body>

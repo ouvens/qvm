@@ -138,7 +138,7 @@
 		var vm = new QNative();
 		var directive = [];
 		var qAttrs = [];
-		var directives = ['text', 'class', 'repeat','on', 'show'];
+		var directives = ['text', 'class', 'repeat','on', 'show', 'set'];
 		var model = {};
 
 		//viewModel变量赋值
@@ -176,7 +176,10 @@
 				$(vm.$elem).data(keyValue[1], attr);
 				return true;
 			},
-
+			set: function(key, vm){
+				Data.parseData(vm.$model[key]['ns'], key, vm);
+				return true;
+			},
 			show: function(key, vm){
 				var state = Data.parseData(vm.$model[key]['ns'], key, vm);
 				if(state){
@@ -243,12 +246,12 @@
 
 				if(vm.parent == vm.$elem){
 					$elem.off(action).on(action, function(){
-						vm.method[fn].call(this,vm.$elem);
+						vm.method[fn].call(this, vm.$elem, vm);
 					});
 				}else{
 
 					$elem.off(action).on(action, vm.selector, function(){
-						vm.method[fn].call(this,vm.$elem);
+						vm.method[fn].call(this, vm.$elem, vm);
 					});
 				}
 				return true;
@@ -522,7 +525,7 @@
 		}
 
 		//生成返回vm对象
-		return vm.$model;
+		return vm;
 	}
 
 	var methods ={
